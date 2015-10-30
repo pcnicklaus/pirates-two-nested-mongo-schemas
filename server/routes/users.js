@@ -5,7 +5,7 @@ var User = require('../models/users');
 var Ship = require('../models/ships');
 
 router.get('/', function(req, res, next){
-      User.find()
+    User.find()
     .populate('ships')
     .exec(function(err, user) {
         if(err) {
