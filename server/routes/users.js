@@ -5,19 +5,23 @@ var User = require('../models/users');
 var Ship = require('../models/ships');
 
 router.get('/', function(req, res, next){
-  User.find(function(err, response){
-    if(err){
-      res.json({message:err});
-    } else {
-      res.json(response);
-    }
-  });
+      User.find()
+    .populate('ships')
+    .exec(function(err, user) {
+        if(err) {
+            res.send(err);
+        } else {
+            res.json(user);
+        }
+    });
 });
 
 
 //save a new user
 router.post('/', function(req, res, next) {
-    var newUser = new User({name: req.body.name});
+    var newUser = new User({
+        name: req.body.name
+    });
     newUser.saveQ()
     .then(function(result) {
         res.json(result);
@@ -32,9 +36,6 @@ router.post('/', function(req, res, next) {
 router.put('/:id/ships', function(req, res, next) {
     var newShip = new Ship(req.body);
     newShip.saveQ();
-
-    // var ship = req.body.ship;
-
     var update = { $push : {ships : newShip}};
     var options = {new:true};
     var id = req.params.id;
