@@ -25,7 +25,9 @@ Get Users</br>
   <ul ng-repeat='user in userData'>
     <a href='#/user' ng-click='getSingleUserId(user)'><li>{{user.name}}</li></a>
     <ul ng-repeat='ship in user.ships'>
-    <li>{{ship.name}}</li>
+    <li>Ship Name: {{ship.name}}</li>
+      <ul>
+      <li>Missions: {{ship.missions}}</li>
     </ul>
   </ul>
 </div>
